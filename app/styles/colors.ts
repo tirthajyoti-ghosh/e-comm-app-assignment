@@ -16,4 +16,4 @@ export const neutral = {
     n5: '#C5CDD2',
     n6: '#E7ECF0',
     n7: '#F8F9FB',
-}
+};

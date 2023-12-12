@@ -1,9 +1,31 @@
 import { TextStyle } from 'react-native';
 import { moderateScale } from 'app/utils/scale';
 
-type Heading = 'h1_regular_30' | 'h1_bold_30' | 'h1_semibold_30' | 'h1_medium_30' | 'h2_regular_26' | 'h2_bold_26' | 'h2_semibold_26' | 'h2_medium_26' | 'h3_regular_20' | 'h3_bold_20' | 'h3_semibold_20' | 'h3_medium_20' | 'h4_regular_18' | 'h4_bold_18' | 'h4_semibold_18' | 'h4_medium_18';
+type Heading =
+    | 'h1_regular_30'
+    | 'h1_bold_30'
+    | 'h1_semibold_30'
+    | 'h1_medium_30'
+    | 'h2_regular_26'
+    | 'h2_bold_26'
+    | 'h2_semibold_26'
+    | 'h2_medium_26'
+    | 'h3_regular_20'
+    | 'h3_bold_20'
+    | 'h3_semibold_20'
+    | 'h3_medium_20'
+    | 'h4_regular_18'
+    | 'h4_bold_18'
+    | 'h4_semibold_18'
+    | 'h4_medium_18';
 
-type Body = 'body1_regular_16' | 'body1_semibold_16' | 'body1_medium_16' | 'body2_regular_14' | 'body2_semibold_14' | 'body2_medium_14';
+type Body =
+    | 'body1_regular_16'
+    | 'body1_semibold_16'
+    | 'body1_medium_16'
+    | 'body2_regular_14'
+    | 'body2_semibold_14'
+    | 'body2_medium_14';
 
 type Label = 'label_medium_12' | 'label_regular_12';
 
