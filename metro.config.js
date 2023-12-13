@@ -1,4 +1,14 @@
+// Refer:
+// https://github.com/facebook/metro/issues/1028#issuecomment-1628933510
+// https://github.com/facebook/react-native/issues/38282
+
+const path = require('path');
 const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
+
+const defaultConfig = getDefaultConfig(__dirname);
+const {
+    resolver: { sourceExts, assetExts },
+} = defaultConfig;
 
 /**
  * Metro configuration
@@ -6,6 +16,15 @@ const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
  *
  * @type {import('metro-config').MetroConfig}
  */
-const config = {};
+const config = {
+    transformer: {
+        babelTransformerPath: require.resolve('react-native-svg-transformer'),
+    },
+    resolver: {
+        assetExts: assetExts.filter(ext => ext !== 'svg'),
+        sourceExts: [...sourceExts, 'svg'],
+    },
+    watchFolders: [path.resolve(__dirname, '../')],
+};
 
-module.exports = mergeConfig(getDefaultConfig(__dirname), config);
+module.exports = mergeConfig(defaultConfig, config);
