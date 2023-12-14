@@ -6,6 +6,7 @@ import * as Colors from 'app/styles/colors';
 import * as Typography from 'app/styles/typography';
 import { moderateScale } from 'app/utils/scale';
 import StarRating from './components/StarRating';
+import ImageCarousel from './components/ImageCarousel';
 
 export default function Product() {
     return (
@@ -18,6 +19,7 @@ export default function Product() {
                 </View>
                 <StarRating rating={4} reviews={110} />
             </View>
+            <ImageCarousel />
         </View>
     );
 }
