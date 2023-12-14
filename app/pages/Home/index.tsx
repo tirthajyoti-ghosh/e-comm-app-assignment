@@ -11,33 +11,33 @@ import * as Typography from 'app/styles/typography';
 
 const offers = [
     {
-        heading: 'Flat 50% Off',
-        offer: 'On first order',
-        subHeading: 'T&C Apply',
+        heading: 'Get',
+        offer: '50% OFF',
+        subHeading: 'On first 03 orders',
         image: 'https://picsum.photos/200/300',
     },
     {
-        heading: 'Flat 50% Off',
-        offer: 'On first order',
-        subHeading: 'T&C Apply',
+        heading: 'Get',
+        offer: '50% OFF',
+        subHeading: 'On first 03 orders',
         image: 'https://picsum.photos/200/300',
     },
     {
-        heading: 'Flat 50% Off',
-        offer: 'On first order',
-        subHeading: 'T&C Apply',
+        heading: 'Get',
+        offer: '50% OFF',
+        subHeading: 'On first 03 orders',
         image: 'https://picsum.photos/200/300',
     },
     {
-        heading: 'Flat 50% Off',
-        offer: 'On first order',
-        subHeading: 'T&C Apply',
+        heading: 'Get',
+        offer: '50% OFF',
+        subHeading: 'On first 03 orders',
         image: 'https://picsum.photos/200/300',
     },
     {
-        heading: 'Flat 50% Off',
-        offer: 'On first order',
-        subHeading: 'T&C Apply',
+        heading: 'Get',
+        offer: '50% OFF',
+        subHeading: 'On first 03 orders',
         image: 'https://picsum.photos/200/300',
     },
 ];
@@ -63,9 +63,17 @@ export default function Home() {
                     </View>
                 </View>
             </View>
-            <ScrollView>
-                {offers.map(offer => (
-                    <OfferCard {...offer} />
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {offers.map((offer, index) => (
+                    <View
+                        style={{
+                            marginLeft: index === 0 ? 20 : 10,
+                            marginRight: index === offers.length - 1 ? 20 : 10,
+                        }}
+                        key={index} // putting index as key won't have effect in this case as the list is static
+                    >
+                        <OfferCard {...offer} />
+                    </View>
                 ))}
             </ScrollView>
             <Text>Recommended</Text>
