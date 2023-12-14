@@ -49,96 +49,112 @@ type ButtonTypography = {
 
 export const heading: HeadingTypography = {
     h1_regular_30: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(30),
         fontWeight: '400',
         fontStyle: 'normal',
         lineHeight: moderateScale(38),
     },
     h1_bold_30: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(30),
         fontWeight: '700',
         fontStyle: 'normal',
         lineHeight: moderateScale(38),
     },
     h1_semibold_30: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(30),
         fontWeight: '600',
         fontStyle: 'normal',
         lineHeight: moderateScale(38),
     },
     h1_medium_30: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(30),
         fontWeight: '500',
         fontStyle: 'normal',
         lineHeight: moderateScale(38),
     },
     h2_regular_26: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(26),
         fontWeight: '400',
         fontStyle: 'normal',
         lineHeight: moderateScale(34),
     },
     h2_bold_26: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(26),
         fontWeight: '700',
         fontStyle: 'normal',
         lineHeight: moderateScale(34),
     },
     h2_semibold_26: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(26),
         fontWeight: '600',
         fontStyle: 'normal',
         lineHeight: moderateScale(34),
     },
     h2_medium_26: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(26),
         fontWeight: '500',
         fontStyle: 'normal',
         lineHeight: moderateScale(34),
     },
     h3_regular_20: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(20),
         fontWeight: '400',
         fontStyle: 'normal',
         lineHeight: moderateScale(28),
     },
     h3_bold_20: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(20),
         fontWeight: '700',
         fontStyle: 'normal',
         lineHeight: moderateScale(28),
     },
     h3_semibold_20: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(20),
         fontWeight: '600',
         fontStyle: 'normal',
         lineHeight: moderateScale(28),
     },
     h3_medium_20: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(20),
         fontWeight: '500',
         fontStyle: 'normal',
         lineHeight: moderateScale(28),
     },
     h4_regular_18: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(18),
         fontWeight: '400',
         fontStyle: 'normal',
         lineHeight: moderateScale(26),
     },
     h4_bold_18: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(18),
         fontWeight: '700',
         fontStyle: 'normal',
         lineHeight: moderateScale(26),
     },
     h4_semibold_18: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(18),
         fontWeight: '600',
         fontStyle: 'normal',
         lineHeight: moderateScale(26),
     },
     h4_medium_18: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(18),
         fontWeight: '500',
         fontStyle: 'normal',
@@ -148,36 +164,42 @@ export const heading: HeadingTypography = {
 
 export const body: BodyTypography = {
     body1_regular_16: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(16),
         fontWeight: '400',
         fontStyle: 'normal',
         lineHeight: moderateScale(24),
     },
     body1_semibold_16: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(16),
         fontWeight: '600',
         fontStyle: 'normal',
         lineHeight: moderateScale(24),
     },
     body1_medium_16: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(16),
         fontWeight: '500',
         fontStyle: 'normal',
         lineHeight: moderateScale(24),
     },
     body2_regular_14: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(14),
         fontWeight: '400',
         fontStyle: 'normal',
         lineHeight: moderateScale(22),
     },
     body2_semibold_14: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(14),
         fontWeight: '600',
         fontStyle: 'normal',
         lineHeight: moderateScale(22),
     },
     body2_medium_14: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(14),
         fontWeight: '500',
         fontStyle: 'normal',
@@ -187,12 +209,14 @@ export const body: BodyTypography = {
 
 export const label: LabelTypography = {
     label_medium_12: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(12),
         fontWeight: '500',
         fontStyle: 'normal',
         lineHeight: moderateScale(20),
     },
     label_regular_12: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(12),
         fontWeight: '400',
         fontStyle: 'normal',
@@ -202,12 +226,14 @@ export const label: LabelTypography = {
 
 export const button: ButtonTypography = {
     button1_14: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(14),
         fontWeight: '500',
         fontStyle: 'normal',
         lineHeight: moderateScale(22),
     },
     button2_12: {
+        fontFamily: 'Manrope',
         fontSize: moderateScale(12),
         fontWeight: '500',
         fontStyle: 'normal',

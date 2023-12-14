@@ -1,10 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import SVGBag from 'app/assets/icons/bag.svg';
 import * as Colors from 'app/styles/colors';
 import Position from 'app/styles/position';
 
-export default function Cart() {
+export default function Cart({ icon }: { icon: React.ReactNode }) {
     const count = 3;
     return (
         <View>
@@ -13,7 +12,7 @@ export default function Cart() {
                     <Text style={styles.countText}>{count}</Text>
                 </View>
             )}
-            <SVGBag />
+            {icon}
         </View>
     );
 }

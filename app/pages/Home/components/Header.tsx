@@ -4,12 +4,13 @@ import { View, Text, StyleSheet } from 'react-native';
 import Cart from 'app/components/Cart';
 import * as Colors from 'app/styles/colors';
 import * as Typography from 'app/styles/typography';
+import SVGBag from 'app/assets/icons/bag.svg';
 
 export default function Header() {
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Hey, Rahul</Text>
-            <Cart />
+            <Cart icon={<SVGBag />} />
         </View>
     );
 }
