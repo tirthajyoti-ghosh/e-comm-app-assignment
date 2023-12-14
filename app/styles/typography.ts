@@ -228,14 +228,14 @@ export const button: ButtonTypography = {
     button1_14: {
         fontFamily: 'Manrope',
         fontSize: moderateScale(14),
-        fontWeight: '500',
+        fontWeight: '600',
         fontStyle: 'normal',
         lineHeight: moderateScale(22),
     },
     button2_12: {
         fontFamily: 'Manrope',
         fontSize: moderateScale(12),
-        fontWeight: '500',
+        fontWeight: '600',
         fontStyle: 'normal',
         lineHeight: moderateScale(20),
     },
