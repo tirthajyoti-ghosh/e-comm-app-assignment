@@ -1,5 +1,7 @@
 import React from 'react';
-import { Image, View, Text, StyleSheet } from 'react-native';
+import { Image, View, Text, StyleSheet, Pressable } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
 
 import SVGHeart from 'app/assets/icons/heart.svg';
 import SVGPlus from 'app/assets/icons/plus.svg';
@@ -7,15 +9,21 @@ import * as Colors from 'app/styles/colors';
 import * as Typography from 'app/styles/typography';
 import Position from 'app/styles/position';
 
+import { RootStackParamList } from 'app/navigators/StackNavigator';
+
 type ProductCardProps = {
     name: string;
     price: number;
     image: string;
 };
 
+type ProductNavigationProp = StackNavigationProp<RootStackParamList, 'Product'>;
+
 export default function ProductCard({ name, price, image }: ProductCardProps) {
+    const navigation = useNavigation<ProductNavigationProp>();
+
     return (
-        <View style={styles.container}>
+        <Pressable style={styles.container} onPress={() => navigation.navigate('Product')}>
             <View style={styles.heart}>
                 <SVGHeart />
             </View>
@@ -29,7 +37,7 @@ export default function ProductCard({ name, price, image }: ProductCardProps) {
                     <SVGPlus />
                 </View>
             </View>
-        </View>
+        </Pressable>
     );
 }
 

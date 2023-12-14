@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, StatusBar } from 'react-native';
 
 import SVGChevronDown from 'app/assets/icons/chevron-down.svg';
 import Header from './components/Header';
@@ -45,6 +45,7 @@ const offers = [
 export default function Home() {
     return (
         <View style={styles.container}>
+            <StatusBar barStyle="light-content" backgroundColor={Colors.primary.b1} />
             <ScrollView>
                 <View style={styles.topContainer}>
                     <Header />

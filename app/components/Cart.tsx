@@ -1,19 +1,25 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 import * as Colors from 'app/styles/colors';
 import Position from 'app/styles/position';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from 'app/navigators/StackNavigator';
+
+type ShoppingCartNavigationProp = StackNavigationProp<RootStackParamList, 'ShoppingCart'>;
 
 export default function Cart({ icon }: { icon: React.ReactNode }) {
+    const navigation = useNavigation<ShoppingCartNavigationProp>();
     const count = 3;
     return (
-        <View>
+        <Pressable style={styles.container} onPress={() => navigation.navigate('ShoppingCart')}>
             {count > 0 && (
                 <View style={styles.count}>
                     <Text style={styles.countText}>{count}</Text>
                 </View>
             )}
             {icon}
-        </View>
+        </Pressable>
     );
 }
 

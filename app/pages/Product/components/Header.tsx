@@ -6,11 +6,14 @@ import * as Colors from 'app/styles/colors';
 import * as Typography from 'app/styles/typography';
 import SVGChevronLeft from 'app/assets/icons/chevron-left.svg';
 import SVGBagBlack from 'app/assets/icons/bag-black.svg';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Header() {
+    const navigation = useNavigation();
+
     return (
         <View style={styles.container}>
-            <Pressable style={styles.backBtn} onPress={() => console.log('pressed')}>
+            <Pressable style={styles.backBtn} onPress={() => navigation.goBack()}>
                 <SVGChevronLeft />
             </Pressable>
             <Cart icon={<SVGBagBlack />} />

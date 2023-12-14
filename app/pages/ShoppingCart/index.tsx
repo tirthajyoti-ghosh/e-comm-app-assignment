@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 
 import * as Colors from 'app/styles/colors';
 import * as Typography from 'app/styles/typography';
@@ -10,6 +10,7 @@ import Button from 'app/components/Button';
 export default function ShoppingCart() {
     return (
         <View style={styles.container}>
+            <StatusBar barStyle="dark-content" backgroundColor={Colors.neutral.white} />
             <Header />
             <ScrollView showsVerticalScrollIndicator={false}>
                 <CartItem />

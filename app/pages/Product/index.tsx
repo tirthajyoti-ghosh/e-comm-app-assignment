@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, StatusBar } from 'react-native';
 
 import Header from './components/Header';
 import * as Colors from 'app/styles/colors';
@@ -12,6 +12,7 @@ import Button from 'app/components/Button';
 export default function Product() {
     return (
         <View style={styles.container}>
+            <StatusBar barStyle="dark-content" backgroundColor={Colors.neutral.white} />
             <Header />
             <ScrollView>
                 <View style={styles.topContainer}>
