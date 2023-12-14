@@ -3,7 +3,9 @@ import { Image, StyleSheet, View, Dimensions } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 import * as Colors from 'app/styles/colors';
+import Position from 'app/styles/position';
 import { moderateScale } from 'app/utils/scale';
+import SVGFavorite from 'app/assets/icons/favorite.svg';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -11,6 +13,9 @@ export default function ImageCarousel() {
     const [activeSlide, setActiveSlide] = useState(0);
     return (
         <View style={styles.container}>
+            <View style={styles.favouriteIcon}>
+                <SVGFavorite />
+            </View>
             <Carousel
                 data={[
                     'https://i.dummyjson.com/data/products/8/thumbnail.jpg',
@@ -72,5 +77,17 @@ const styles = StyleSheet.create({
         height: 3,
         borderRadius: 5,
         backgroundColor: '#E4E4E4',
+    },
+    favouriteIcon: {
+        position: 'absolute',
+        zIndex: Position.zIndex.overlayLevel99,
+        top: 20,
+        right: 20,
+        width: 58,
+        height: 58,
+        borderRadius: 20,
+        backgroundColor: Colors.neutral.white,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
