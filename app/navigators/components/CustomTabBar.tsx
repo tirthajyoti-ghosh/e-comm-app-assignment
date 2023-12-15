@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         left: 10,
         bottom: 0,
         height: 80,
-        backgroundColor: 'white',
+        backgroundColor: 'transparent',
         borderRadius: 30,
     },
 });

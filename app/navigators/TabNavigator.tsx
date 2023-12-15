@@ -69,7 +69,6 @@ export default function HomeTabNavigator() {
             initialRouteName="Home"
             tabBar={props => <CustomTabBar {...props} />}
             screenOptions={({ route }) => ({
-                headerShown: false,
                 tabBarShowLabel: false,
                 tabBarInactiveTintColor: 'dark',
                 tabBarStyle: styles.tabBarStyle,
