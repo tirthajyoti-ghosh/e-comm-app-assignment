@@ -82,7 +82,8 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
     },
     price: {
-        ...Typography.body.body1_regular_16,
+        ...Typography.body.body1_semibold_16,
+        fontWeight: '700',
         color: Colors.primary.b1,
     },
     discount: {
