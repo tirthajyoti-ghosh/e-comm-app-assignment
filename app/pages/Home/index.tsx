@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet, StatusBar, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, StatusBar, ActivityIndicator, FlatList, Dimensions } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 
 import SVGChevronDown from 'app/assets/icons/chevron-down.svg';
@@ -11,6 +11,8 @@ import * as Colors from 'app/styles/colors';
 import * as Typography from 'app/styles/typography';
 import { Product } from 'app/types/data';
 import api from 'app/services/api';
+
+const width = Dimensions.get('window').width;
 
 const offers = [
     {
@@ -98,17 +100,27 @@ export default function Home() {
 
                         <Text style={styles.title}>Recommended</Text>
 
-                        <View style={styles.productContainer}>
-                            {data?.products.map(product => (
-                                <ProductCard
-                                    key={product.id}
-                                    id={product.id}
-                                    name={product.title}
-                                    price={product.price}
-                                    image={product.thumbnail}
-                                />
-                            ))}
-                        </View>
+                        <FlatList
+                            data={data?.products}
+                            renderItem={({ item, index }) => (
+                                <View
+                                    style={{
+                                        ...styles.productContainer,
+                                        ...(index % 2 === 0
+                                            ? { marginRight: 10, marginLeft: 20 }
+                                            : { marginLeft: 10, marginRight: 20 }),
+                                    }}>
+                                    <ProductCard
+                                        id={item.id}
+                                        name={item.title}
+                                        price={item.price}
+                                        image={item.thumbnail}
+                                    />
+                                </View>
+                            )}
+                            keyExtractor={item => String(item.id)}
+                            numColumns={2}
+                        />
                     </>
                 )}
             </ScrollView>
@@ -155,9 +167,7 @@ const styles = StyleSheet.create({
         marginLeft: 20,
     },
     productContainer: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        paddingHorizontal: 20,
+        marginBottom: 20,
+        width: width / 2 - 30,
     },
 });

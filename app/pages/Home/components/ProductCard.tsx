@@ -51,8 +51,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.neutral.n7,
         borderRadius: 12,
         padding: 15,
-        marginBottom: 20,
-        width: '48%',
+        height: 240,
     },
     imageContainer: {
         width: '100%',
