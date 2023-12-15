@@ -82,7 +82,6 @@ export default function HomeTabNavigator() {
                 name="Home"
                 component={Home}
                 options={{
-                    headerShown: false,
                     tabBarButton: props => <CustomTabBarButton title="Home" route="home" {...props} />,
                 }}
             />
@@ -90,6 +89,7 @@ export default function HomeTabNavigator() {
                 name="Categories"
                 component={CategoriesScreen}
                 options={{
+                    headerShown: true,
                     tabBarButton: props => <CustomTabBarButton title="Categories" {...props} />,
                 }}
             />
@@ -104,8 +104,6 @@ export default function HomeTabNavigator() {
                 name="More"
                 component={MoreScreen}
                 options={{
-                    tabBarLabel: 'More',
-                    title: 'More',
                     headerShown: true,
                     tabBarButton: props => <CustomTabBarButton title="More" route="more" {...props} />,
                 }}

@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     },
     counterText: {
         marginHorizontal: 10,
+        color: '#1E222B',
     },
     counterBtnText: {
         ...Typography.body.body1_semibold_16,

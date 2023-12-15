@@ -32,6 +32,7 @@ export default function ProductList({ data }: { data: Product[] }) {
             keyExtractor={item => String(item.id)}
             numColumns={2}
             extraData={favorite}
+            removeClippedSubviews
             ListFooterComponent={<View style={{ marginBottom: 80 }} />}
         />
     );
