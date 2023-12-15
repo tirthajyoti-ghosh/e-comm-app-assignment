@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, Text, View } from 'react-native';
 
 import Home from 'app/pages/Home';
+import FavoriteScreen from 'app/pages/Favorite';
 import * as Colors from 'app/styles/colors';
 import SVGHome from 'app/assets/icons/home.svg';
 import SVGFavoriteMenu from 'app/assets/icons/favorite-menu.svg';
@@ -29,14 +30,6 @@ function CategoriesScreen() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text>Categories!</Text>
-        </View>
-    );
-}
-
-function FavoriteScreen() {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Favorite!</Text>
         </View>
     );
 }
@@ -69,6 +62,7 @@ export default function HomeTabNavigator() {
             initialRouteName="Home"
             tabBar={props => <CustomTabBar {...props} />}
             screenOptions={({ route }) => ({
+                headerShown: false,
                 tabBarShowLabel: false,
                 tabBarInactiveTintColor: 'dark',
                 tabBarStyle: styles.tabBarStyle,

@@ -19,3 +19,7 @@ export type Cart = {
         product: Product;
     };
 };
+
+export type Favorite = {
+    [key: number]: Product;
+};

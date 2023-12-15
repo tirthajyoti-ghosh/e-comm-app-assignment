@@ -1,35 +1,61 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Image, View, Text, StyleSheet, Pressable } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
+import { useQueryClient } from '@tanstack/react-query';
 
 import SVGHeart from 'app/assets/icons/heart.svg';
+import SVGHeartFilled from 'app/assets/icons/heart-filled.svg';
 import SVGPlus from 'app/assets/icons/plus.svg';
 import * as Colors from 'app/styles/colors';
 import * as Typography from 'app/styles/typography';
 import Position from 'app/styles/position';
-
-import { RootStackParamList } from 'app/navigators/StackNavigator';
 import useAddToCart from 'app/hooks/useAddToCart';
+import { RootStackParamList } from 'app/navigators/StackNavigator';
+import { Favorite, Product } from 'app/types/data';
 
 type ProductCardProps = {
     id: number;
     name: string;
     price: number;
     image: string;
+    favorite?: boolean;
 };
 
 type ProductNavigationProp = StackNavigationProp<RootStackParamList, 'Product'>;
 
-export default function ProductCard({ id, name, price, image }: ProductCardProps) {
+export default function ProductCard({ id, name, price, image, favorite }: ProductCardProps) {
+    // const [isFavorite, setIsFavorite] = useState(favorite);
     const navigation = useNavigation<ProductNavigationProp>();
     const addToCart = useAddToCart();
 
+    // console.log({ favorite, isFavorite });
+
+    const queryClient = useQueryClient();
+    const data = useMemo(() => queryClient.getQueryData<{ products: Product[] }>(['products']), [queryClient]);
+
+    const addToFavorite = () => {
+        queryClient.setQueryData(['favorite'], (existingData: Favorite) => {
+            return {
+                ...existingData,
+                [id]: { ...data?.products.find(product => product.id === id) },
+            };
+        });
+    };
+
+    const removeFromFavorite = () => {
+        queryClient.setQueryData(['favorite'], (existingData: Favorite) => {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { [id]: _, ...rest } = existingData;
+            return rest;
+        });
+    };
+
     return (
         <Pressable style={styles.container} onPress={() => navigation.navigate('Product', { id })}>
-            <View style={styles.heart}>
-                <SVGHeart />
-            </View>
+            <Pressable style={styles.heart} onPress={() => (favorite ? removeFromFavorite() : addToFavorite())}>
+                {favorite ? <SVGHeartFilled /> : <SVGHeart />}
+            </Pressable>
             <View style={styles.imageContainer}>
                 <Image style={styles.image} source={{ uri: image }} />
             </View>
@@ -85,9 +111,7 @@ const styles = StyleSheet.create({
     },
     heart: {
         position: 'absolute',
-        left: 5,
-        top: 5,
+        padding: 15,
         zIndex: Position.zIndex.overlayLevel1,
-        padding: 10,
     },
 });
