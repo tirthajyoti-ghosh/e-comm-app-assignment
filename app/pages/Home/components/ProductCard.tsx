@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Image, View, Text, StyleSheet, Pressable } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
@@ -11,7 +11,7 @@ import Position from 'app/styles/position';
 
 import { RootStackParamList } from 'app/navigators/StackNavigator';
 import { useQueryClient } from '@tanstack/react-query';
-import { Cart } from 'app/types/data';
+import { Cart, Product } from 'app/types/data';
 
 type ProductCardProps = {
     id: number;
@@ -25,6 +25,8 @@ type ProductNavigationProp = StackNavigationProp<RootStackParamList, 'Product'>;
 export default function ProductCard({ id, name, price, image }: ProductCardProps) {
     const navigation = useNavigation<ProductNavigationProp>();
     const queryClient = useQueryClient();
+
+    const data = useMemo(() => queryClient.getQueryData<{ products: Product[] }>(['products']), [queryClient]);
 
     const addToCart = (productId: string) => {
         const cart = queryClient.getQueryData<Cart>(['cart']) || {};
@@ -45,6 +47,7 @@ export default function ProductCard({ id, name, price, image }: ProductCardProps
                 [productId]: {
                     id: productId,
                     quantity: 1,
+                    product: data?.products.find(product => product.id === Number(productId))!,
                 },
             });
         }

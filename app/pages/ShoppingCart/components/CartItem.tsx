@@ -5,19 +5,27 @@ import SVGPlusBlack from 'app/assets/icons/plus-black.svg';
 import SVGMinus from 'app/assets/icons/minus.svg';
 import * as Typography from 'app/styles/typography';
 
-export default function CartItem() {
+type CartItemProps = {
+    id: number;
+    image: string;
+    title: string;
+    price: string;
+    quantity: number;
+};
+
+export default function CartItem({ id, image, title, price, quantity }: CartItemProps) {
     return (
         <View style={styles.container}>
-            <Image style={styles.image} source={{ uri: 'https://picsum.photos/200/300' }} />
+            <Image style={styles.image} source={{ uri: image }} key={id} />
             <View style={styles.productContainer}>
-                <Text style={styles.text}>Name</Text>
-                <Text style={styles.text}>$7.49</Text>
+                <Text style={styles.text}>{title}</Text>
+                <Text style={styles.text}>${price}</Text>
             </View>
             <View style={styles.buttonContainer}>
                 <Pressable style={styles.button}>
                     <SVGMinus />
                 </Pressable>
-                <Text style={styles.counterText}>1</Text>
+                <Text style={styles.counterText}>{quantity}</Text>
                 <Pressable style={styles.button}>
                     <SVGPlusBlack />
                 </Pressable>
@@ -66,5 +74,7 @@ const styles = StyleSheet.create({
     },
     text: {
         ...Typography.body.body2_medium_14,
+        fontWeight: '500',
+        color: '#1E222B',
     },
 });

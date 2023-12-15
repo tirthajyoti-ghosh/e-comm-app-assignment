@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet, StatusBar, ActivityIndicator } from 'react-native';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import SVGChevronDown from 'app/assets/icons/chevron-down.svg';
 import Header from './components/Header';
@@ -9,7 +9,7 @@ import OfferCard from './components/OfferCard';
 import ProductCard from './components/ProductCard';
 import * as Colors from 'app/styles/colors';
 import * as Typography from 'app/styles/typography';
-import { Cart, Product } from 'app/types/data';
+import { Product } from 'app/types/data';
 import api from 'app/services/api';
 
 const offers = [
@@ -41,15 +41,10 @@ const offers = [
 ];
 
 export default function Home() {
-    const queryClient = useQueryClient();
-
     const { isLoading, error, data } = useQuery({
         queryKey: ['products'],
         queryFn: () => api.get<{ products: Product[] }>('/products'),
     });
-
-    // setup cart global state
-    queryClient.setQueryData<Cart>(['cart'], {});
 
     return (
         <View style={styles.container}>

@@ -6,7 +6,7 @@ import * as Typography from 'app/styles/typography';
 import SVGChevronLeft from 'app/assets/icons/chevron-left.svg';
 import { useNavigation } from '@react-navigation/native';
 
-export default function Header() {
+export default function Header({ count }: { count: number }) {
     const navigation = useNavigation();
 
     return (
@@ -14,7 +14,7 @@ export default function Header() {
             <Pressable style={styles.backBtn} onPress={() => navigation.goBack()}>
                 <SVGChevronLeft />
             </Pressable>
-            <Text style={styles.text}>Shopping Cart (5)</Text>
+            <Text style={styles.text}>Shopping Cart ({count})</Text>
         </View>
     );
 }
