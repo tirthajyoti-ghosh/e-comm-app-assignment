@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, StatusBar, ActivityIndicator } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 
@@ -43,8 +43,19 @@ const offers = [
 export default function Home() {
     const { isLoading, error, data } = useQuery({
         queryKey: ['products'],
-        queryFn: () => api.get<{ products: Product[] }>('/products'),
+        queryFn: () => api.get<{ products: Product[] }>('/products?limit=100'),
     });
+
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const filteredProducts =
+        searchTerm === ''
+            ? data?.products
+            : data?.products.filter(product =>
+                  `${product.title} ${product.description} ${product.category}`
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase()),
+              );
 
     return (
         <View style={styles.container}>
@@ -52,7 +63,7 @@ export default function Home() {
             <ScrollView>
                 <View style={styles.topContainer}>
                     <Header />
-                    <Search />
+                    <Search onChangeText={text => setSearchTerm(text)} />
                     <View style={styles.deliveryContainer}>
                         <View>
                             <Text style={styles.label}>DELIVERY TO</Text>
@@ -98,7 +109,7 @@ export default function Home() {
 
                         <Text style={styles.title}>Recommended</Text>
 
-                        <ProductList data={data?.products || []} />
+                        <ProductList data={filteredProducts || []} />
                     </>
                 )}
             </ScrollView>
