@@ -27,7 +27,9 @@ export default function ProductCard({ name, price, image }: ProductCardProps) {
             <View style={styles.heart}>
                 <SVGHeart />
             </View>
-            <Image style={styles.image} source={{ uri: image }} />
+            <View style={styles.imageContainer}>
+                <Image style={styles.image} source={{ uri: image }} />
+            </View>
             <View>
                 <View>
                     <Text style={styles.price}>${price}</Text>
@@ -49,14 +51,21 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         width: '48%',
     },
-    image: {
+    imageContainer: {
         width: '100%',
+        aspectRatio: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+    image: {
+        width: '80%',
         aspectRatio: 1,
         objectFit: 'contain',
     },
     price: {
         ...Typography.body.body2_semibold_14,
-        color: Colors.neutral.n1,
+        color: '#1E222B',
     },
     name: {
         ...Typography.label.label_regular_12,
@@ -71,7 +80,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position: 'absolute',
         right: 0,
-        top: 0,
     },
     heart: {
         position: 'absolute',
