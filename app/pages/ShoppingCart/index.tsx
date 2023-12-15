@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Pressable, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from 'app/navigators/StackNavigator';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -18,7 +18,6 @@ export default function ShoppingCart() {
     const navigation = useNavigation<HomeTabNavigationProp>();
     const cart = useQueryCacheData<Cart>(['cart']) || {};
 
-    // subtotal = sum of all (product price * quantity - each product's discount%)
     const subtotal = Object.values(cart || {}).reduce(
         (acc, item) =>
             acc + (item.product.price - item.product.price * (item.product.discountPercentage / 100)) * item.quantity,
@@ -28,16 +27,15 @@ export default function ShoppingCart() {
     return (
         <View style={styles.container}>
             <StatusBar barStyle="dark-content" backgroundColor={Colors.neutral.white} />
+            <Header count={Object.values(cart || {}).reduce((acc, item) => acc + item.quantity, 0)} />
 
             {Object.keys(cart).length === 0 ? (
-                <View style={styles.loader}>
-                    <ActivityIndicator size="large" color={Colors.primary.b1} />
-                </View>
+                <Text style={styles.cartEmptyText}> Your cart is empty </Text>
             ) : (
                 <>
-                    <Header count={Object.values(cart || {}).reduce((acc, item) => acc + item.quantity, 0)} />
-                    <ScrollView showsVerticalScrollIndicator={false}>
-                        {Object.values(cart || {}).map(item => (
+                    <FlatList
+                        data={Object.values(cart || {})}
+                        renderItem={({ item }) => (
                             <CartItem
                                 key={item.id}
                                 id={item.id}
@@ -49,11 +47,15 @@ export default function ShoppingCart() {
                                 ).toFixed(2)}
                                 quantity={item.quantity}
                             />
-                        ))}
-                        <Pressable style={styles.editBtn} onPress={() => navigation.navigate('HomeTab')}>
-                            <Text style={styles.editBtnText}>Edit</Text>
-                        </Pressable>
-                    </ScrollView>
+                        )}
+                        keyExtractor={item => item.id.toString()}
+                        showsVerticalScrollIndicator={false}
+                        ListFooterComponent={
+                            <Pressable style={styles.editBtn} onPress={() => navigation.navigate('HomeTab')}>
+                                <Text style={styles.editBtnText}>Edit</Text>
+                            </Pressable>
+                        }
+                    />
                     <View style={styles.checkoutContainer}>
                         <View style={styles.checkout}>
                             <Text style={styles.category}>Subtotal</Text>
@@ -130,5 +132,11 @@ const styles = StyleSheet.create({
         marginTop: 20,
         alignItems: 'center',
         paddingVertical: 15,
+    },
+    cartEmptyText: {
+        ...Typography.body.body2_regular_14,
+        color: '#616A7D',
+        textAlign: 'center',
+        marginTop: 20,
     },
 });

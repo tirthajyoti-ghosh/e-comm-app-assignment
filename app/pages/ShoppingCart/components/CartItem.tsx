@@ -4,6 +4,8 @@ import { View, Image, Text, Pressable, StyleSheet } from 'react-native';
 import SVGPlusBlack from 'app/assets/icons/plus-black.svg';
 import SVGMinus from 'app/assets/icons/minus.svg';
 import * as Typography from 'app/styles/typography';
+import { useQueryClient } from '@tanstack/react-query';
+import { Cart } from 'app/types/data';
 
 type CartItemProps = {
     id: number;
@@ -14,19 +16,56 @@ type CartItemProps = {
 };
 
 export default function CartItem({ id, image, title, price, quantity }: CartItemProps) {
+    const queryClient = useQueryClient();
+
+    const decrement = () => {
+        const data = queryClient.getQueryData<Cart>(['cart']);
+
+        if (data && data[id].quantity === 1) {
+            queryClient.setQueryData(['cart'], (existingData: Cart) => {
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                const { [id]: _, ...rest } = existingData;
+                return rest;
+            });
+            return;
+        } else {
+            queryClient.setQueryData(['cart'], (existingData: Cart) => {
+                return {
+                    ...existingData,
+                    [id]: {
+                        ...existingData[id],
+                        quantity: existingData[id].quantity - 1,
+                    },
+                };
+            });
+        }
+    };
+
+    const increment = () => {
+        queryClient.setQueryData(['cart'], (data: Cart) => {
+            return {
+                ...data,
+                [id]: {
+                    ...data[id],
+                    quantity: data[id].quantity + 1,
+                },
+            };
+        });
+    };
+
     return (
         <View style={styles.container}>
-            <Image style={styles.image} source={{ uri: image }} key={id} />
+            <Image style={styles.image} source={{ uri: image }} />
             <View style={styles.productContainer}>
                 <Text style={styles.text}>{title}</Text>
                 <Text style={styles.text}>${price}</Text>
             </View>
             <View style={styles.buttonContainer}>
-                <Pressable style={styles.button}>
+                <Pressable style={styles.button} onPress={decrement}>
                     <SVGMinus />
                 </Pressable>
                 <Text style={styles.counterText}>{quantity}</Text>
-                <Pressable style={styles.button}>
+                <Pressable style={styles.button} onPress={increment}>
                     <SVGPlusBlack />
                 </Pressable>
             </View>
