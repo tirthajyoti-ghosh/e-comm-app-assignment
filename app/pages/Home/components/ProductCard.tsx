@@ -12,6 +12,7 @@ import Position from 'app/styles/position';
 import { RootStackParamList } from 'app/navigators/StackNavigator';
 
 type ProductCardProps = {
+    id: number;
     name: string;
     price: number;
     image: string;
@@ -19,11 +20,11 @@ type ProductCardProps = {
 
 type ProductNavigationProp = StackNavigationProp<RootStackParamList, 'Product'>;
 
-export default function ProductCard({ name, price, image }: ProductCardProps) {
+export default function ProductCard({ id, name, price, image }: ProductCardProps) {
     const navigation = useNavigation<ProductNavigationProp>();
 
     return (
-        <Pressable style={styles.container} onPress={() => navigation.navigate('Product')}>
+        <Pressable style={styles.container} onPress={() => navigation.navigate('Product', { id })}>
             <View style={styles.heart}>
                 <SVGHeart />
             </View>

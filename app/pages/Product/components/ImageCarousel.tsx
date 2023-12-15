@@ -9,21 +9,16 @@ import SVGFavorite from 'app/assets/icons/favorite.svg';
 
 const screenWidth = Dimensions.get('window').width;
 
-export default function ImageCarousel() {
+export default function ImageCarousel({ images }: { images: string[] }) {
     const [activeSlide, setActiveSlide] = useState(0);
+
     return (
         <View style={styles.container}>
-            <View style={styles.favouriteIcon}>
+            <View style={styles.favoriteIcon}>
                 <SVGFavorite />
             </View>
             <Carousel
-                data={[
-                    'https://i.dummyjson.com/data/products/8/thumbnail.jpg',
-                    'https://i.dummyjson.com/data/products/8/1.jpg',
-                    'https://i.dummyjson.com/data/products/8/2.jpg',
-                    'https://i.dummyjson.com/data/products/8/3.jpg',
-                    'https://i.dummyjson.com/data/products/8/4.jpg',
-                ]}
+                data={images}
                 renderItem={({ item }) => (
                     <View style={styles.imageContainer}>
                         <Image source={{ uri: item }} style={styles.image} />
@@ -78,7 +73,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: '#E4E4E4',
     },
-    favouriteIcon: {
+    favoriteIcon: {
         position: 'absolute',
         zIndex: Position.zIndex.overlayLevel99,
         top: 20,

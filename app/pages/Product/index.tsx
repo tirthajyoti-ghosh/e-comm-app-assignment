@@ -1,5 +1,8 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View, StatusBar } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+import type { RouteProp } from '@react-navigation/native';
+import { useQueryClient } from '@tanstack/react-query';
 
 import Header from './components/Header';
 import * as Colors from 'app/styles/colors';
@@ -8,8 +11,19 @@ import { moderateScale } from 'app/utils/scale';
 import StarRating from './components/StarRating';
 import ImageCarousel from './components/ImageCarousel';
 import Button from 'app/components/Button';
+import { Product as ProductType } from 'app/types/data';
+
+type ProductRouteProp = RouteProp<{ Product: { id: number } }, 'Product'>;
 
 export default function Product() {
+    const route = useRoute<ProductRouteProp>();
+    const { id } = route.params;
+
+    const queryClient = useQueryClient();
+
+    const data = queryClient.getQueryData<{ products: ProductType[] }>(['products']);
+    const product = data?.products.find(item => item.id === id);
+
     return (
         <View style={styles.container}>
             <StatusBar barStyle="dark-content" backgroundColor={Colors.neutral.white} />
@@ -17,15 +31,15 @@ export default function Product() {
             <ScrollView>
                 <View style={styles.topContainer}>
                     <View style={styles.heading}>
-                        <Text style={styles.brand}>Thin Choice</Text>
-                        <Text style={styles.name}>Top Orange</Text>
+                        <Text style={styles.brand}>{product?.brand}</Text>
+                        <Text style={styles.name}>{product?.title}</Text>
                     </View>
-                    <StarRating rating={4} reviews={110} />
+                    <StarRating rating={product?.rating || 0} reviews={Math.floor(Math.random() * 100) + 100} />
                 </View>
-                <ImageCarousel />
+                <ImageCarousel images={product?.images.reverse() || []} />
                 <View style={styles.priceContainer}>
-                    <Text style={styles.price}>$199.99</Text>
-                    <Text style={styles.discount}>$22.04 OFF</Text>
+                    <Text style={styles.price}>${product?.price}</Text>
+                    <Text style={styles.discount}>${product?.discountPercentage} OFF</Text>
                 </View>
                 <View style={styles.buttonContainer}>
                     <Button style={styles.button} title="Add to cart" onPress={() => {}} type="secondary" />
@@ -33,17 +47,7 @@ export default function Product() {
                 </View>
                 <View style={styles.descContainer}>
                     <Text style={styles.descHeading}>Details</Text>
-                    <Text style={styles.desc}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id semper urna. Nulla facilisi.
-                        Nulla facilisi. Donec euismod, nisl vitae tincidunt ultricies, velit tellus maximus justo, ut
-                        ullamcorper justo odio ut magna. Donec auctor, nisl et consectetur aliquam, erat nisi tincidunt
-                        justo, nec malesuada quam tellus quis nisl. Donec vel lectus sed risus luctus ultricies. Donec
-                        ullamcorper, nunc ut interdum efficitur, nisl elit aliquam mauris, sit amet consequat quam elit
-                        nec risus. Nullam nec metus id nulla hendrerit tempus. Donec auctor, nisl et consectetur
-                        aliquam, erat nisi tincidunt justo, nec malesuada quam tellus quis nisl. Donec vel lectus sed
-                        risus luctus ultricies. Donec ullamcorper, nunc ut interdum efficitur, nisl elit aliquam mauris,
-                        sit amet consequat quam elit nec risus. Nullam nec metus id nulla hendrerit tempus.
-                    </Text>
+                    <Text style={styles.desc}>{product?.description}</Text>
                 </View>
             </ScrollView>
         </View>
@@ -53,24 +57,26 @@ export default function Product() {
 const styles = StyleSheet.create({
     container: {
         height: '100%',
+        marginBottom: 100,
         backgroundColor: Colors.neutral.white,
     },
     topContainer: {
         paddingHorizontal: 20,
+        marginBottom: 20,
     },
     heading: {
         marginVertical: 20,
     },
     brand: {
         ...Typography.heading.h1_regular_30,
-        fontSize: moderateScale(45),
+        fontSize: moderateScale(40),
         fontWeight: '300',
-        lineHeight: moderateScale(50),
+        lineHeight: moderateScale(45),
         color: '#1E222B',
     },
     name: {
         ...Typography.heading.h1_regular_30,
-        fontSize: moderateScale(45),
+        fontSize: moderateScale(40),
         fontWeight: '800',
         lineHeight: moderateScale(50),
         color: '#1E222B',

@@ -7,7 +7,9 @@ import ShoppingCart from 'app/pages/ShoppingCart';
 
 export type RootStackParamList = {
     HomeTab: undefined;
-    Product: undefined;
+    Product: {
+        id: number;
+    };
     ShoppingCart: undefined;
 };
 

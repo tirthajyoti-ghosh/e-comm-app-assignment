@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet, StatusBar } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, StatusBar, ActivityIndicator } from 'react-native';
+import { useQuery } from '@tanstack/react-query';
 
 import SVGChevronDown from 'app/assets/icons/chevron-down.svg';
 import Header from './components/Header';
@@ -8,6 +9,8 @@ import OfferCard from './components/OfferCard';
 import ProductCard from './components/ProductCard';
 import * as Colors from 'app/styles/colors';
 import * as Typography from 'app/styles/typography';
+import { Product } from 'app/types/data';
+import api from 'app/services/api';
 
 const offers = [
     {
@@ -43,6 +46,11 @@ const offers = [
 ];
 
 export default function Home() {
+    const { isLoading, error, data } = useQuery({
+        queryKey: ['products'],
+        queryFn: () => api.get<{ products: Product[] }>('/products'),
+    });
+
     return (
         <View style={styles.container}>
             <StatusBar barStyle="light-content" backgroundColor={Colors.primary.b1} />
@@ -65,69 +73,43 @@ export default function Home() {
                         </View>
                     </View>
                 </View>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {offers.map((offer, index) => (
-                        <View
-                            style={{
-                                marginLeft: index === 0 ? 20 : 10,
-                                marginRight: index === offers.length - 1 ? 20 : 10,
-                            }}
-                            key={index} // putting index as key won't have effect in this case as the list is static
-                        >
-                            <OfferCard {...offer} />
+                {isLoading ? (
+                    <View style={styles.loader}>
+                        <ActivityIndicator size="large" color={Colors.primary.b1} />
+                    </View>
+                ) : error ? (
+                    <Text>Error</Text>
+                ) : (
+                    <>
+                        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                            {offers.map((offer, index) => (
+                                <View
+                                    style={{
+                                        marginLeft: index === 0 ? 20 : 10,
+                                        marginRight: index === offers.length - 1 ? 20 : 10,
+                                    }}
+                                    key={index} // putting index as key won't have effect in this case as the list is static
+                                >
+                                    <OfferCard {...offer} />
+                                </View>
+                            ))}
+                        </ScrollView>
+
+                        <Text style={styles.title}>Recommended</Text>
+
+                        <View style={styles.productContainer}>
+                            {data?.products.map(product => (
+                                <ProductCard
+                                    key={product.id}
+                                    id={product.id}
+                                    name={product.title}
+                                    price={product.price}
+                                    image={product.thumbnail}
+                                />
+                            ))}
                         </View>
-                    ))}
-                </ScrollView>
-
-                <Text style={styles.title}>Recommended</Text>
-
-                <View style={styles.productContainer}>
-                    <ProductCard
-                        name="Apple"
-                        price={200}
-                        image="https://i.dummyjson.com/data/products/1/thumbnail.jpg"
-                    />
-                    <ProductCard
-                        name="Apple"
-                        price={200}
-                        image="https://i.dummyjson.com/data/products/1/thumbnail.jpg"
-                    />
-                    <ProductCard
-                        name="Apple"
-                        price={200}
-                        image="https://i.dummyjson.com/data/products/1/thumbnail.jpg"
-                    />
-                    <ProductCard
-                        name="Apple"
-                        price={200}
-                        image="https://i.dummyjson.com/data/products/1/thumbnail.jpg"
-                    />
-                    <ProductCard
-                        name="Apple"
-                        price={200}
-                        image="https://i.dummyjson.com/data/products/1/thumbnail.jpg"
-                    />
-                    <ProductCard
-                        name="Apple"
-                        price={200}
-                        image="https://i.dummyjson.com/data/products/1/thumbnail.jpg"
-                    />
-                    <ProductCard
-                        name="Apple"
-                        price={200}
-                        image="https://i.dummyjson.com/data/products/1/thumbnail.jpg"
-                    />
-                    <ProductCard
-                        name="Apple"
-                        price={200}
-                        image="https://i.dummyjson.com/data/products/1/thumbnail.jpg"
-                    />
-                    <ProductCard
-                        name="Apple"
-                        price={200}
-                        image="https://i.dummyjson.com/data/products/1/thumbnail.jpg"
-                    />
-                </View>
+                    </>
+                )}
             </ScrollView>
         </View>
     );
@@ -148,6 +130,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 30,
         paddingBottom: 10,
+    },
+    loader: {
+        height: 400,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     label: {
         ...Typography.label.label_regular_12,
