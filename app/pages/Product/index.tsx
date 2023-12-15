@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View, StatusBar } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, StatusBar, ToastAndroid } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
 import { useQueryClient } from '@tanstack/react-query';
@@ -12,6 +12,7 @@ import StarRating from './components/StarRating';
 import ImageCarousel from './components/ImageCarousel';
 import Button from 'app/components/Button';
 import { Product as ProductType } from 'app/types/data';
+import useAddToCart from 'app/hooks/useAddToCart';
 
 type ProductRouteProp = RouteProp<{ Product: { id: number } }, 'Product'>;
 
@@ -20,6 +21,7 @@ export default function Product() {
     const { id } = route.params;
 
     const queryClient = useQueryClient();
+    const addToCart = useAddToCart();
 
     const data = queryClient.getQueryData<{ products: ProductType[] }>(['products']);
     const product = data?.products.find(item => item.id === id);
@@ -42,7 +44,15 @@ export default function Product() {
                     <Text style={styles.discount}>${product?.discountPercentage} OFF</Text>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <Button style={styles.button} title="Add to cart" onPress={() => {}} type="secondary" />
+                    <Button
+                        style={styles.button}
+                        title="Add to cart"
+                        onPress={() => {
+                            addToCart(String(product?.id));
+                            ToastAndroid.show('Added to cart', ToastAndroid.SHORT);
+                        }}
+                        type="secondary"
+                    />
                     <Button style={styles.button} title="Buy now" onPress={() => {}} type="primary" />
                 </View>
                 <View style={styles.descContainer}>
