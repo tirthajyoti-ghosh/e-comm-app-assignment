@@ -9,8 +9,6 @@ const width = Dimensions.get('window').width;
 export default function ProductList({ data }: { data: Product[] }) {
     const favorite = useQueryCacheData<Favorite>(['favorite']) || {};
 
-    console.log(favorite);
-
     return (
         <FlatList
             data={data}

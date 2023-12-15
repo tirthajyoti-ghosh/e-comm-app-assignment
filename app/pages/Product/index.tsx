@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View, StatusBar, ToastAndroid } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, StatusBar, ToastAndroid, Pressable } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
 import { useQueryClient } from '@tanstack/react-query';
@@ -7,12 +7,17 @@ import { useQueryClient } from '@tanstack/react-query';
 import Header from './components/Header';
 import * as Colors from 'app/styles/colors';
 import * as Typography from 'app/styles/typography';
+import Position from 'app/styles/position';
 import { moderateScale } from 'app/utils/scale';
+import SVGFavorite from 'app/assets/icons/favorite.svg';
+import SVGFavoriteFilled from 'app/assets/icons/favorite-filled.svg';
+import Button from 'app/components/Button';
+import { Favorite, Product as ProductType } from 'app/types/data';
+import useAddToCart from 'app/hooks/useAddToCart';
+import useQueryCacheData from 'app/hooks/useQueryCacheData';
+import useFavorite from 'app/hooks/useFavorite';
 import StarRating from './components/StarRating';
 import ImageCarousel from './components/ImageCarousel';
-import Button from 'app/components/Button';
-import { Product as ProductType } from 'app/types/data';
-import useAddToCart from 'app/hooks/useAddToCart';
 
 type ProductRouteProp = RouteProp<{ Product: { id: number } }, 'Product'>;
 
@@ -21,7 +26,10 @@ export default function Product() {
     const { id } = route.params;
 
     const queryClient = useQueryClient();
+
     const addToCart = useAddToCart();
+    const { addToFavorite, removeFromFavorite } = useFavorite(id);
+    const favorite = useQueryCacheData<Favorite>(['favorite']) || {};
 
     const data = queryClient.getQueryData<{ products: ProductType[] }>(['products']);
     const product = data?.products.find(item => item.id === id);
@@ -38,7 +46,14 @@ export default function Product() {
                     </View>
                     <StarRating rating={product?.rating || 0} reviews={Math.floor(Math.random() * 100) + 100} />
                 </View>
-                <ImageCarousel images={product?.images.reverse() || []} />
+                <View style={styles.carouselContainer}>
+                    <Pressable
+                        style={styles.favoriteIcon}
+                        onPress={() => (favorite[id] ? removeFromFavorite() : addToFavorite())}>
+                        {favorite[id] ? <SVGFavoriteFilled /> : <SVGFavorite />}
+                    </Pressable>
+                    <ImageCarousel images={product?.images.reverse() || []} />
+                </View>
                 <View style={styles.priceContainer}>
                     <Text style={styles.price}>${product?.price}</Text>
                     <Text style={styles.discount}>${product?.discountPercentage} OFF</Text>
@@ -76,6 +91,19 @@ const styles = StyleSheet.create({
     },
     heading: {
         marginVertical: 20,
+    },
+    carouselContainer: {},
+    favoriteIcon: {
+        position: 'absolute',
+        zIndex: Position.zIndex.overlayLevel99,
+        top: 20,
+        right: 20,
+        width: 58,
+        height: 58,
+        borderRadius: 20,
+        backgroundColor: Colors.neutral.white,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     brand: {
         ...Typography.heading.h1_regular_30,

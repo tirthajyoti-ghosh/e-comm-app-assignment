@@ -1,8 +1,7 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Image, View, Text, StyleSheet, Pressable } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
-import { useQueryClient } from '@tanstack/react-query';
 
 import SVGHeart from 'app/assets/icons/heart.svg';
 import SVGHeartFilled from 'app/assets/icons/heart-filled.svg';
@@ -12,7 +11,7 @@ import * as Typography from 'app/styles/typography';
 import Position from 'app/styles/position';
 import useAddToCart from 'app/hooks/useAddToCart';
 import { RootStackParamList } from 'app/navigators/StackNavigator';
-import { Favorite, Product } from 'app/types/data';
+import useFavorite from 'app/hooks/useFavorite';
 
 type ProductCardProps = {
     id: number;
@@ -25,31 +24,9 @@ type ProductCardProps = {
 type ProductNavigationProp = StackNavigationProp<RootStackParamList, 'Product'>;
 
 export default function ProductCard({ id, name, price, image, favorite }: ProductCardProps) {
-    // const [isFavorite, setIsFavorite] = useState(favorite);
     const navigation = useNavigation<ProductNavigationProp>();
     const addToCart = useAddToCart();
-
-    // console.log({ favorite, isFavorite });
-
-    const queryClient = useQueryClient();
-    const data = useMemo(() => queryClient.getQueryData<{ products: Product[] }>(['products']), [queryClient]);
-
-    const addToFavorite = () => {
-        queryClient.setQueryData(['favorite'], (existingData: Favorite) => {
-            return {
-                ...existingData,
-                [id]: { ...data?.products.find(product => product.id === id) },
-            };
-        });
-    };
-
-    const removeFromFavorite = () => {
-        queryClient.setQueryData(['favorite'], (existingData: Favorite) => {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { [id]: _, ...rest } = existingData;
-            return rest;
-        });
-    };
+    const { addToFavorite, removeFromFavorite } = useFavorite(id);
 
     return (
         <Pressable style={styles.container} onPress={() => navigation.navigate('Product', { id })}>
