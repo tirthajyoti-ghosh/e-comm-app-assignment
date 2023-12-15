@@ -5,12 +5,17 @@ import Position from 'app/styles/position';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from 'app/navigators/StackNavigator';
+import useQueryCache from 'app/hooks/useQueryCacheData';
+import { Cart as CartType } from 'app/types/data';
 
 type ShoppingCartNavigationProp = StackNavigationProp<RootStackParamList, 'ShoppingCart'>;
 
 export default function Cart({ icon }: { icon: React.ReactNode }) {
     const navigation = useNavigation<ShoppingCartNavigationProp>();
-    const count = 3;
+    const cart = useQueryCache<CartType>(['cart']);
+
+    const count = Object.values(cart || {}).reduce((acc, item) => acc + item.quantity, 0);
+
     return (
         <Pressable style={styles.container} onPress={() => navigation.navigate('ShoppingCart')}>
             {count > 0 && (

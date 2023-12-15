@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet, StatusBar, ActivityIndicator } from 'react-native';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import SVGChevronDown from 'app/assets/icons/chevron-down.svg';
 import Header from './components/Header';
@@ -9,7 +9,7 @@ import OfferCard from './components/OfferCard';
 import ProductCard from './components/ProductCard';
 import * as Colors from 'app/styles/colors';
 import * as Typography from 'app/styles/typography';
-import { Product } from 'app/types/data';
+import { Cart, Product } from 'app/types/data';
 import api from 'app/services/api';
 
 const offers = [
@@ -17,39 +17,39 @@ const offers = [
         heading: 'Get',
         offer: '50% OFF',
         subHeading: 'On first 03 orders',
-        image: 'https://picsum.photos/200/300',
     },
     {
         heading: 'Get',
         offer: '50% OFF',
         subHeading: 'On first 03 orders',
-        image: 'https://picsum.photos/200/300',
     },
     {
         heading: 'Get',
         offer: '50% OFF',
         subHeading: 'On first 03 orders',
-        image: 'https://picsum.photos/200/300',
     },
     {
         heading: 'Get',
         offer: '50% OFF',
         subHeading: 'On first 03 orders',
-        image: 'https://picsum.photos/200/300',
     },
     {
         heading: 'Get',
         offer: '50% OFF',
         subHeading: 'On first 03 orders',
-        image: 'https://picsum.photos/200/300',
     },
 ];
 
 export default function Home() {
+    const queryClient = useQueryClient();
+
     const { isLoading, error, data } = useQuery({
         queryKey: ['products'],
         queryFn: () => api.get<{ products: Product[] }>('/products'),
     });
+
+    // setup cart global state
+    queryClient.setQueryData<Cart>(['cart'], {});
 
     return (
         <View style={styles.container}>
@@ -90,7 +90,13 @@ export default function Home() {
                                     }}
                                     key={index} // putting index as key won't have effect in this case as the list is static
                                 >
-                                    <OfferCard {...offer} />
+                                    <OfferCard
+                                        {...offer}
+                                        image={
+                                            data?.products[Math.floor(Math.random() * data.products.length)]
+                                                .thumbnail || ''
+                                        }
+                                    />
                                 </View>
                             ))}
                         </ScrollView>

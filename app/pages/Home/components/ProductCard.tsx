@@ -10,6 +10,8 @@ import * as Typography from 'app/styles/typography';
 import Position from 'app/styles/position';
 
 import { RootStackParamList } from 'app/navigators/StackNavigator';
+import { useQueryClient } from '@tanstack/react-query';
+import { Cart } from 'app/types/data';
 
 type ProductCardProps = {
     id: number;
@@ -22,6 +24,31 @@ type ProductNavigationProp = StackNavigationProp<RootStackParamList, 'Product'>;
 
 export default function ProductCard({ id, name, price, image }: ProductCardProps) {
     const navigation = useNavigation<ProductNavigationProp>();
+    const queryClient = useQueryClient();
+
+    const addToCart = (productId: string) => {
+        const cart = queryClient.getQueryData<Cart>(['cart']) || {};
+
+        const item = cart[Number(productId)];
+
+        if (item) {
+            queryClient.setQueryData<Cart>(['cart'], {
+                ...cart,
+                [productId]: {
+                    ...item,
+                    quantity: item.quantity + 1,
+                },
+            });
+        } else {
+            queryClient.setQueryData<Cart>(['cart'], {
+                ...cart,
+                [productId]: {
+                    id: productId,
+                    quantity: 1,
+                },
+            });
+        }
+    };
 
     return (
         <Pressable style={styles.container} onPress={() => navigation.navigate('Product', { id })}>
@@ -36,9 +63,9 @@ export default function ProductCard({ id, name, price, image }: ProductCardProps
                     <Text style={styles.price}>${price}</Text>
                     <Text style={styles.name}>{name}</Text>
                 </View>
-                <View style={styles.plus}>
+                <Pressable style={styles.plus} onPress={() => addToCart(String(id))}>
                     <SVGPlus />
-                </View>
+                </Pressable>
             </View>
         </Pressable>
     );
