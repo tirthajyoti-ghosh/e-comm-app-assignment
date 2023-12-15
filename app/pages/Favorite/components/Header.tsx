@@ -7,9 +7,11 @@ import * as Typography from 'app/styles/typography';
 import SVGChevronLeft from 'app/assets/icons/chevron-left.svg';
 import SVGBagBlack from 'app/assets/icons/bag-black.svg';
 import { useNavigation } from '@react-navigation/native';
+import useQueryCacheData from 'app/hooks/useQueryCacheData';
 
 export default function Header() {
     const navigation = useNavigation();
+    const favorite = useQueryCacheData(['favorite']) || {};
 
     return (
         <View style={styles.container}>
@@ -18,7 +20,7 @@ export default function Header() {
                     <SVGChevronLeft />
                 </Pressable>
 
-                <Text style={styles.text}>Favorite (5)</Text>
+                <Text style={styles.text}>Favorite ({Object.keys(favorite).length})</Text>
             </View>
             <Cart icon={<SVGBagBlack />} />
         </View>
