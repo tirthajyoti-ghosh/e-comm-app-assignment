@@ -110,14 +110,14 @@ const styles = StyleSheet.create({
         fontSize: moderateScale(40),
         fontWeight: '300',
         lineHeight: moderateScale(45),
-        color: '#1E222B',
+        color: Colors.text.dark,
     },
     name: {
         ...Typography.heading.h1_regular_30,
         fontSize: moderateScale(40),
         fontWeight: '800',
         lineHeight: moderateScale(50),
-        color: '#1E222B',
+        color: Colors.text.dark,
     },
     priceContainer: {
         flexDirection: 'row',
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     },
     descHeading: {
         ...Typography.body.body1_regular_16,
-        color: '#1E222B',
+        color: Colors.text.dark,
         marginBottom: 10,
     },
     desc: {

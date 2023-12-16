@@ -70,11 +70,11 @@ const styles = StyleSheet.create({
     },
     price: {
         ...Typography.body.body2_semibold_14,
-        color: '#1E222B',
+        color: Colors.text.dark,
     },
     name: {
         ...Typography.label.label_regular_12,
-        color: '#616A7D',
+        color: Colors.text.grey,
     },
     plus: {
         backgroundColor: Colors.primary.b1,

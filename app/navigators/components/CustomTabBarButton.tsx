@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
 
+import * as Colors from 'app/styles/colors';
 import * as Typography from 'app/styles/typography';
 
 const CustomTabBarButton = (props: BottomTabBarButtonProps & { route?: string; title: string }) => {
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         borderRadius: 50 / 2,
-        backgroundColor: '#1E222B',
+        backgroundColor: Colors.text.dark,
         alignItems: 'center',
         justifyContent: 'center',
         paddingTop: 5,

@@ -18,3 +18,8 @@ export const neutral = {
     n7: '#F8F9FB',
     white: '#FFFFFF',
 };
+
+export const text = {
+    dark: '#1E222B',
+    grey: '#616A7D',
+};

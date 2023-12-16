@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     },
     text: {
         ...Typography.body.body1_regular_16,
-        color: '#1E222B',
+        color: Colors.text.dark,
         marginLeft: 20,
     },
     backBtn: {

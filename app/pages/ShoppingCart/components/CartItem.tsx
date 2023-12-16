@@ -3,6 +3,7 @@ import { View, Image, Text, Pressable, StyleSheet } from 'react-native';
 
 import SVGPlusBlack from 'app/assets/icons/plus-black.svg';
 import SVGMinus from 'app/assets/icons/minus.svg';
+import * as Colors from 'app/styles/colors';
 import * as Typography from 'app/styles/typography';
 import { useQueryClient } from '@tanstack/react-query';
 import { Cart } from 'app/types/data';
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
     },
     counterText: {
         marginHorizontal: 10,
-        color: '#1E222B',
+        color: Colors.text.dark,
     },
     counterBtnText: {
         ...Typography.body.body1_semibold_16,
@@ -115,6 +116,6 @@ const styles = StyleSheet.create({
     text: {
         ...Typography.body.body2_medium_14,
         fontWeight: '500',
-        color: '#1E222B',
+        color: Colors.text.dark,
     },
 });

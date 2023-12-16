@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     },
     cartEmptyText: {
         ...Typography.body.body2_regular_14,
-        color: '#616A7D',
+        color: Colors.text.grey,
         textAlign: 'center',
         marginTop: 20,
     },

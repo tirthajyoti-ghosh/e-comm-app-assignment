@@ -122,11 +122,11 @@ const styles = StyleSheet.create({
     },
     category: {
         ...Typography.body.body2_regular_14,
-        color: '#616A7D',
+        color: Colors.text.grey,
     },
     amount: {
         ...Typography.body.body2_medium_14,
-        color: '#1E222B',
+        color: Colors.text.dark,
     },
     checkoutBtn: {
         marginTop: 20,
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     },
     cartEmptyText: {
         ...Typography.body.body2_regular_14,
-        color: '#616A7D',
+        color: Colors.text.grey,
         textAlign: 'center',
         marginTop: 20,
     },
